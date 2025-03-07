@@ -18,7 +18,7 @@
                 <i class="bi bi-list text-success" style="font-size: 1.5rem;"></i> 
             </button>
             <!-- Logo and site name -->
-            <a class="navbar-brand text-success mx-4 py-2" href="#"><img src="/static/logo.svg" alt="Logo" width="24" height="24" class="d-inline-block align-text-top me-2">LCC Issue Tracker</a>
+            <a class="navbar-brand text-success mx-auto mx-lg-4 py-2" href="{% if session['role'] == 'visitor' %}{{ url_for('visitor_home') }}{% elif session['role'] == 'helper' %}{{ url_for('helper_home') }}{% elif session['role'] == 'admin' %}{{ url_for('admin_home') }}{% endif %}"><img src="/static/logo.svg" alt="Logo" width="24" height="24" class="d-inline-block align-text-top me-2">LCC Issue Tracker</a>
             
         </div>
     </nav>
@@ -52,15 +52,26 @@
             </ul>
             <hr>
             <ul class="nav nav-pills flex-column">
-                <li class="nav-item mb-3">
+                <li class="nav-item mb-3 dropup">
+                    <a class="nav-link link-success" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Profile
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="{{ url_for('profile') }}">Edit</a></li>
+                      <li><a class="dropdown-item" href="#">Change Password</a></li>
+                    </ul>
+                </li>
+                <!-- <li class="nav-item mb-3">
                     <a class="nav-link link-success {{' active' if active_page=='profile' else ''}}" href="{{ url_for('profile') }}" >
                         Profile
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item mb-3">
                     <a class="nav-link link-success" href="{{ url_for('logout') }}">Log Out</a>
                 </li>
             </ul>
+            <p class="text-secondary">Student Name: Xiao Zhang</p> 
+            <p class="text-secondary">Student ID:   1163066</p>
         </div>
     </div>
 

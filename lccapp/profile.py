@@ -2,8 +2,9 @@ from lccapp import app, db
 from flask import redirect, render_template, request, session, url_for, flash
 import os
 from werkzeug.utils import secure_filename 
-UPLOAD_FOLDER = 'lccapp/static/uploads'
-app.config['UPLOAD_FOLDER'] = 'lccapp/static/uploads'  # Set upload directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "static/uploads")
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER  
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
