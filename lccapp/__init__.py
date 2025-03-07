@@ -18,8 +18,8 @@ app = Flask(__name__)
 app.secret_key = 'COMP 639'
 
 # Set up database connection.
-from lccapp import connect
 from lccapp import db
+from lccapp import connect
 db.init_db(app, connect.dbuser, connect.dbpass, connect.dbhost, connect.dbname)
 
 # Include all modules that define our Flask route-handling functions.
