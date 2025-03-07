@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="row justify-content-center pt-5">
+        <!-- profile pic and username -->
+        <div class="col-lg-6 text-center mb-3">
+            <img id="profileImage" 
+                    src="{{ user.profile_image if user.profile_image else '/static/uploads/default.jpg' }}" 
+                    alt="Profile Picture" class="rounded-circle img-fluid" 
+                    style="width: 150px; height: 150px; object-fit: cover;">
+            <div class="fs-3 fw-semibold mt-2 mb-4">
+                {{user.username}} 
+            </div> 
+        </div>
+
+        <!-- flash message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+        {% endwith %}
+
+        <!-- profile form -->
+        <form id="profileForm" method="POST" action="{{ url_for('user_profile', user_id=user.user_id) }}">
+            <div class="row justify-content-center">
+                <div class="col-6 col-lg-3 mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select id="role" name="role" class="form-select" required>
+                        <option {% if user.role == 'visitior' %}selected{% endif %} value="visitor">Visitor</option>
+                        <option {% if user.role == 'helper' %}selected{% endif %} value="helper">Helper</option>
+                        <option {% if user.role == 'admin' %}selected{% endif %} value="admin">Admin</option>
+                      </select>
+                </div>
+                <div class="col-6 col-lg-3 mb-3">
+                    <label for="status" class="form-label">User Status</label>
+                    <select id="status" name="status" class="form-select" required>
+                        <option {% if user.status == 'active' %}selected{% endif %} value="active">Active</option>
+                        <option {% if user.status == 'inactive' %}selected{% endif %} value="inactive">Inactive</option>
+                      </select>
+                </div>   
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-3 mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" disabled>
+                </div>
+                <div class="col-lg-3 mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" disabled>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-6 mb-3">
+                    <label for="useremail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="useremail" name="email" value="{{ user.email }}" disabled>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-6 mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{ user.location }}" disabled>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- auto-submit -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const roleSelect = document.getElementById('role');
+        const statusSelect = document.getElementById('status');
+        const profileForm = document.getElementById('profileForm');
+
+        // Auto-submit when role or status is changed
+        roleSelect.addEventListener('change', function () {
+            profileForm.submit();
+        });
+
+        statusSelect.addEventListener('change', function () {
+            profileForm.submit();
+        });
+    });
+</script>
+{% endblock %}

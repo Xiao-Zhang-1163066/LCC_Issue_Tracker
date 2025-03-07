@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}User Issues{% endblock %}
+
+{% block content %}
+<section class="container pt-5">
+    <!-- Page Header -->
+    <div class="row justify-content-between align-items-center mb-2">
+        <div class="col-lg-9">
+            <h2>User Issues</h2>
+            <p class="lead text-muted fs-6">
+                Manage all the user-reported issues here effortlessly.
+            </p>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <ul class="nav nav-underline mb-4" id="issueTabs">
+        <li class="nav-item">
+            <a class="nav-link text-success active" aria-current="page" href="#ongoing" data-bs-toggle="tab">Ongoing Issues</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-success" href="#resolved" data-bs-toggle="tab">Resolved Issues</a>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <!-- Ongoing Issues Tab -->
+        <div class="tab-pane fade show active" id="ongoing">
+            <div class="row col-xl-12 g-3">
+                {% for issue in ongoing_issues %}
+                <div class="col-xl-3">
+                    <a href="{{ url_for('issue_detail', issue_id=issue.issue_id) }}" class="text-decoration-none">
+                        <div class="card border-0  h-100 px-3 py-2 hover-shadow">
+                            <span>
+                                <span class="badge text-bg-{{ issue.issue_status }} d-inline-block mb-1">{{ issue.issue_status|capitalize }}</span>
+                                <span class="fs-5 mb-1 d-block">{{ issue.summary }}</span>
+                            </span>
+                            <div class="d-flex align-items-center">
+                                <img src="{{ issue.profile_image or '/static/avatar_default.png' }}" alt="{{ issue.first_name }}" width="20" height="20"
+                                    class="rounded-circle border border-white me-2">
+                                <div>
+                                    <p class="text-secondary fs-6 my-0">{{ issue.first_name }}<i class="bi bi-clock ms-2 me-1"></i>{{ issue.created_at.strftime('%d-%m-%Y') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Resolved Issues Tab -->
+        <div class="tab-pane show fade text-success" id="resolved">
+            <div class="row col-xl-12 g-3">
+                {% for issue in resolved_issues %}
+                <div class="col-xl-3">
+                    <a href="{{ url_for('issue_detail', issue_id=issue.issue_id) }}" class="text-decoration-none">
+                        <div class="card h-100 px-3 py-2 hover-shadow">
+                            <span>
+                                <span class="badge text-bg-success d-inline-block mb-1">Resolved</span>
+                                <span class="fs-5 mb-1 d-block">{{ issue.summary }}</span>
+                            </span>
+                            <div class="d-flex align-items-center">
+                                <img src="{{ issue.profile_image or '/static/avatar_default.png' }}" alt="{{ issue.first_name }}" width="20" height="20"
+                                    class="rounded-circle border border-white me-2">
+                                <div>
+                                    <p class="text-secondary fs-6 my-0">{{ issue.first_name }} | {{ issue.created_at.strftime('%d-%m-%Y') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

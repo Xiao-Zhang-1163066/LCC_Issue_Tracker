@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Issue Detail{% endblock %}
+
+{% block content %}
+<section class="container pt-5">
+    <div class="row justify-content-center"></div>
+        <div class="col-lg-8 mx-lg-auto">
+            <!-- Page Header -->
+            <h3 class=""> 
+                {{ issue.summary }}
+            </h3>
+
+            <div class="d-flex align-items-center mt-1 ">
+                <span class="text-secondary">Created by {{ issue.first_name }} at {{ issue.created_at.strftime('%H:%M %d-%m-%Y') }}</span>
+            </div>
+            <div class="card p-3 mt-3 mb-5">
+                <!-- choose status -->
+                <h6 class="mb-2"><strong>Issue Status</strong></h6>
+                <form id="statusForm" action="{{ url_for('update_issue_status', issue_id=issue.issue_id) }}" method="POST" class="mb-2">
+                    <input type="hidden" name="source_page" value="issue_detail">
+                    <div class="mb-3">
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="issue_status" id="status_new" value="new" {% if issue.issue_status == 'new' %}checked{% endif %}>
+                                <label class="form-check-label" for="status_new">New</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="issue_status" id="status_open" value="open" {% if issue.issue_status == 'open' %}checked{% endif %}>
+                                <label class="form-check-label" for="status_open">Open</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="issue_status" id="status_stalled" value="stalled" {% if issue.issue_status == 'stalled' %}checked{% endif %}>
+                                <label class="form-check-label" for="status_stalled">Stalled</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="issue_status" id="status_resolved" value="resolved" {% if issue.issue_status == 'resolved' %}checked{% endif %}>
+                                <label class="form-check-label" for="status_resolved">Resolved</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- description -->
+                <h6 class="mb-2"><strong>Description</strong></h6>
+                <div class="mb-2">
+                    {{ issue.description }}
+                </div>
+                <!-- Comments -->
+                <h6 class="mt-4 mb-2"><strong>Comments</strong></h6>
+                {% for comment in comments %}
+                <div class="mb-1">
+                    <div class="d-flex align-items-start mt-0">
+                        <img src="{{ comment.profile_image or '/static/uploads/default.jpg' }}" alt="{{ comment.first_name }}'s Avatar" class="rounded-circle mt-1 me-2" width="20" height="20">
+                        <div class="w-100">
+                            <span class="text-black fs-6 fw-semibold">{{ comment.first_name }}</span> ·
+                            <span class="text-secondary fs-6">{{ comment.role|capitalize }}</span> ·
+                            <span class="text-secondary fs-6">{{ comment.created_at.strftime('%H:%M %d-%m-%Y') }}</span>
+                            <p class="fs-6">{{ comment.content }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- Add Comment Form -->
+                <form action="{{ url_for('add_comment', issue_id=issue.issue_id) }}" method="POST">
+                    <textarea class="form-control mb-2" name="content" id="content" placeholder="Add a comment" rows="3" required></textarea>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success">Comment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- auoto-submit the issue status form -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const radioButtons = document.querySelectorAll('input[name="issue_status"]');
+        const statusForm = document.getElementById('statusForm');
+
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function () {
+                statusForm.submit(); // 自动提交表单
+            });
+        });
+    });
+</script>
+{% endblock %}

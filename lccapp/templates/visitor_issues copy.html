@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Visitor Issues{% endblock %}
+
+{% block content %}
+<section class="container pt-5">
+    <!-- Page Header -->
+    <div class="row justify-content-between align-items-center mb-2">
+        <div class="col-lg-9">
+            <h2>Visitor Issues</h2>
+            <p class="lead text-muted fs-6">
+                Manage all the visitor reported issues here effortlessly.
+            </p>
+        </div>
+    </div>
+    <!-- tabs -->
+    <ul class="nav nav-underline mb-4">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Ongoing Issues</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Resolved Issues</a>
+        </li>
+      </ul>
+
+    <!-- issue cards -->
+    <div class="row col-xl-12 g-3">
+        <div class="col-xl-3">
+            <a href="#" class="text-decoration-none">
+                <div class="card h-100 px-3 py-2 hover-shadow">
+                    <span>
+                        <span class="badge text-bg-new d-inline-block mb-1">New</span>
+                        <span class="fs-5 mb-1 d-block">No Hot Water in Shower</span>
+                    </span>
+                    <div class="d-flex align-items-center">
+                        <img src="/static/avatar_default.png" alt="mdo" width="20" height="20"
+                             class="rounded-circle border border-white me-2">
+                        <div>
+                            <p class="text-secondary fs-6 my-0">Jack | 02-03-2025</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
