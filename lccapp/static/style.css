@@ -85,7 +85,7 @@
 
 /* login & sign up page style */
 /* fullscreen background image  */
-html, body {
+.login-body {
     overflow: hidden;
     margin: 0; 
     padding: 0;

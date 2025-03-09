@@ -1,39 +1,39 @@
 INSERT INTO `users` (`username`, `password_hash`, `email`, `first_name`, `last_name`, `location`, `profile_image`, `role`, `status`)
 VALUES 
     -- 20 Visitors
-    ('alice_j', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'alice@example.com', 'Alice', 'Johnson', 'Greenwoods Camp', NULL, 'visitor', 'active'),
-    ('bob_smith', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'bob@example.com', 'Bob', 'Smith', 'Lakeside Park', NULL, 'visitor', 'active'),
-    ('charlie_b', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'charlie@example.com', 'Charlie', 'Brown', 'Highlands Retreat', NULL, 'visitor', 'active'),
-    ('diana_m', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'diana@example.com', 'Diana', 'Miller', 'Sunset Valley', NULL, 'visitor', 'active'),
-    ('edward_k', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'edward@example.com', 'Edward', 'King', 'Riverbend', NULL, 'visitor', 'active'),
-    ('frank_h', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'frank@example.com', 'Frank', 'Harrison', 'Forest Camp', NULL, 'visitor', 'active'),
-    ('george_t', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'george@example.com', 'George', 'Taylor', 'Beachview Camp', NULL, 'visitor', 'active'),
-    ('hannah_p', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'hannah@example.com', 'Hannah', 'Parker', 'Sunset Camp', NULL, 'visitor', 'inactive'),
-    ('ian_d', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'ian@example.com', 'Ian', 'Dawson', 'Mountain Camp', NULL, 'visitor', 'active'),
-    ('julia_r', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'julia@example.com', 'Julia', 'Roberts', 'Lakeside Camp', NULL, 'visitor', 'active'),
-    ('kevin_l', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'kevin@example.com', 'Kevin', 'Lopez', 'Greenwoods', NULL, 'visitor', 'active'),
-    ('lucas_m', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'lucas@example.com', 'Lucas', 'Martinez', 'Sunset Valley', NULL, 'visitor', 'active'),
-    ('maria_c', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'maria@example.com', 'Maria', 'Clark', 'Forest Camp', NULL, 'visitor', 'active'),
-    ('nathan_s', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'nathan@example.com', 'Nathan', 'Scott', 'Riverbend', NULL, 'visitor', 'active'),
-    ('olivia_j', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'olivia@example.com', 'Olivia', 'James', 'Highlands', NULL, 'visitor', 'inactive'),
-    ('paul_b', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'paul@example.com', 'Paul', 'Baker', 'Mountain Camp', NULL, 'visitor', 'active'),
-    ('quinn_f', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'quinn@example.com', 'Quinn', 'Foster', 'Lakeside', NULL, 'visitor', 'active'),
-    ('rachel_g', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'rachel@example.com', 'Rachel', 'Gibson', 'Greenwoods', NULL, 'visitor', 'active'),
-    ('steven_h', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'steven@example.com', 'Steven', 'Hall', 'Sunset Camp', NULL, 'visitor', 'active'),
-    ('teresa_v', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'teresa@example.com', 'Teresa', 'Vega', 'Beachview', NULL, 'visitor', 'active'),
+    ('alice_j', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'alice@example.com', 'Alice', 'Johnson', 'Greenwoods Camp', NULL, 'visitor', 'active'),
+    ('bob_smith', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'bob@example.com', 'Bob', 'Smith', 'Lakeside Park', NULL, 'visitor', 'active'),
+    ('charlie_b', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'charlie@example.com', 'Charlie', 'Brown', 'Highlands Retreat', NULL, 'visitor', 'active'),
+    ('diana_m', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'diana@example.com', 'Diana', 'Miller', 'Sunset Valley', NULL, 'visitor', 'active'),
+    ('edward_k', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'edward@example.com', 'Edward', 'King', 'Riverbend', NULL, 'visitor', 'active'),
+    ('frank_h', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'frank@example.com', 'Frank', 'Harrison', 'Forest Camp', NULL, 'visitor', 'active'),
+    ('george_t', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'george@example.com', 'George', 'Taylor', 'Beachview Camp', NULL, 'visitor', 'active'),
+    ('hannah_p', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'hannah@example.com', 'Hannah', 'Parker', 'Sunset Camp', NULL, 'visitor', 'inactive'),
+    ('ian_d', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'ian@example.com', 'Ian', 'Dawson', 'Mountain Camp', NULL, 'visitor', 'active'),
+    ('julia_r', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'julia@example.com', 'Julia', 'Roberts', 'Lakeside Camp', NULL, 'visitor', 'active'),
+    ('kevin_l', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'kevin@example.com', 'Kevin', 'Lopez', 'Greenwoods', NULL, 'visitor', 'active'),
+    ('lucas_m', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'lucas@example.com', 'Lucas', 'Martinez', 'Sunset Valley', NULL, 'visitor', 'active'),
+    ('maria_c', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'maria@example.com', 'Maria', 'Clark', 'Forest Camp', NULL, 'visitor', 'active'),
+    ('nathan_s', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'nathan@example.com', 'Nathan', 'Scott', 'Riverbend', NULL, 'visitor', 'active'),
+    ('olivia_j', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'olivia@example.com', 'Olivia', 'James', 'Highlands', NULL, 'visitor', 'inactive'),
+    ('paul_b', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'paul@example.com', 'Paul', 'Baker', 'Mountain Camp', NULL, 'visitor', 'active'),
+    ('quinn_f', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'quinn@example.com', 'Quinn', 'Foster', 'Lakeside', NULL, 'visitor', 'active'),
+    ('rachel_g', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'rachel@example.com', 'Rachel', 'Gibson', 'Greenwoods', NULL, 'visitor', 'active'),
+    ('steven_h', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'steven@example.com', 'Steven', 'Hall', 'Sunset Camp', NULL, 'visitor', 'active'),
+    ('teresa_v', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'teresa@example.com', 'Teresa', 'Vega', 'Beachview', NULL, 'visitor', 'active'),
     
     -- 5 Helpers
-    ('helper_1', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'helper1@example.com', 'Ryan', 'Nelson', 'Greenwoods Camp', NULL, 'helper', 'inactive'),
-    ('helper_2', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'helper2@example.com', 'Samantha', 'Brooks', 'Lakeside Park', NULL, 'helper', 'active'),
-    ('helper_3', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'helper3@example.com', 'Thomas', 'Evans', 'Highlands', NULL, 'helper', 'active'),
-    ('helper_4', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'helper4@example.com', 'Emily', 'Carter', 'Sunset Camp', NULL, 'helper', 'active'),
-    ('helper_5', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'helper5@example.com', 'Daniel', 'Morris', 'Mountain Camp', NULL, 'helper', 'active'),
+    ('helper_1', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'helper1@example.com', 'Ryan', 'Nelson', 'Greenwoods Camp', NULL, 'helper', 'inactive'),
+    ('helper_2', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'helper2@example.com', 'Samantha', 'Brooks', 'Lakeside Park', NULL, 'helper', 'active'),
+    ('helper_3', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'helper3@example.com', 'Thomas', 'Evans', 'Highlands', NULL, 'helper', 'active'),
+    ('helper_4', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'helper4@example.com', 'Emily', 'Carter', 'Sunset Camp', NULL, 'helper', 'active'),
+    ('helper_5', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'helper5@example.com', 'Daniel', 'Morris', 'Mountain Camp', NULL, 'helper', 'active'),
 
     -- 2 Admins
-    ('admin_1', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'admin1@example.com', 'Michael', 'Stewart', 'Greenwoods Camp', NULL, 'admin', 'active'),
-    ('admin_2', '$2b$12$Yw7jpz16/.8RM/QOJtMpUOQCAS/irRaBpAbcOEmPDb6on0RJupvIO', 'admin2@example.com', 'Sarah', 'Wright', 'Lakeside Park', NULL, 'admin', 'active');
+    ('admin_1', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'admin1@example.com', 'Michael', 'Stewart', 'Greenwoods Camp', NULL, 'admin', 'active'),
+    ('admin_2', '$2b$12$E5Fj9FX/A8vwK1Q5PYbQKeTygUegWYC4TtU0W8KG2aEPkN4Jt0ofW', 'admin2@example.com', 'Sarah', 'Wright', 'Lakeside Park', NULL, 'admin', 'active');
 
-
+    
 INSERT INTO `issues` (`user_id`, `summary`, `description`, `issue_status`, `created_at`)
 VALUES 
     (1, 'Broken Picnic Table', 'The table near the entrance is missing a leg.', 'new', '2025-01-05 10:30:00'),

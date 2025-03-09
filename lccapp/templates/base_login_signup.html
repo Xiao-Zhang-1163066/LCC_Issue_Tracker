@@ -11,7 +11,7 @@
   <header class="me-auto">
     {% block header %}{% endblock %}    
   </header>
-  <body class="d-flex flex-column min-vh-100">
+  <body class="d-flex flex-column min-vh-100 login-body">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
     <!-- Full-screen background image and overlay -->
@@ -24,7 +24,7 @@
 
       <div class="row justify-content-center h-100 align-items-center px-4">
         <!-- Logo and title -->
-        <div class="col-12 col-lg-7 my-0  d-flex justify-content-center">
+        <div class="col-12 col-lg-7 my-0 d-none d-lg-flex justify-content-center">
           <div class="logo-container d-flex align-items-center">
             <img src="/static/logo_white.svg" alt="Logo" width="24" height="24" class="me-2">
             <h3 class="text-white m-0">LCC Issue Tracker</h3> 
@@ -32,10 +32,16 @@
         </div>
 
         <!-- Login form container -->
-        <div class="col-12 col-lg-5">
+        <div class="col-12 col-lg-4">
           <div class="card shadow-sm mx-auto container p-3 mx-6">
+            <div class="row d-lg-none justify-content-start mb-3">
+              <div class="d-flex align-items-center">
+                <img src="/static/logo.svg" alt="Logo" width="24" height="24" class="me-2">
+                <h3 class="text-success m-0">LCC Issue Tracker</h3>
+              </div>
+            </div>
             <div class="row justify-content-start ">
-              <h3 class="mt-2 mb-4">Welcome!</h3>
+              <h3 class="mt-2 mb-2">{% block cardname %}{% endblock %}</h3>
             </div>
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}

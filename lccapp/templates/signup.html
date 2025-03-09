@@ -2,6 +2,7 @@
 
 {% block title %}Sign Up{% endblock %}
 
+{% block cardname %}Sign Up{% endblock %}
 
 {% block content %}
 
@@ -28,15 +29,15 @@
     <label for="confirm_password" class="form-label">Confirm Password</label>
   </div>
   <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name..." required>
+    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name..." value="{{ first_name }}" required>
     <label for="confirm_password" class="form-label">First Name</label>
   </div>
   <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name..." required>
+    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name..." value="{{ last_name }}" required>
     <label for="confirm_password" class="form-label">Last Name</label>
   </div>
   <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="location" name="location" placeholder="Enter your location..." required>
+    <input type="text" class="form-control" id="location" name="location" placeholder="Enter your location..." value="{{ location }}" required>
     <label for="confirm_password" class="form-label">Home Location</label>
   </div>
   <div class="text-center">
