@@ -16,7 +16,7 @@ DEFAULT_USER_ROLE = 'visitor'
 def role_required(allowed_roles=['admin', 'helper', 'visitor']):
     """
     Custom decorator to restrict access based on user roles.
-     allowed_roles: List of roles allowed to access the function. Defaults to ['admin', 'helper', 'visitor'].
+    allowed_roles: List of roles allowed to access the function. Defaults to ['admin', 'helper', 'visitor'].
     """
     def decorator(func):
         @wraps(func)
