@@ -54,7 +54,7 @@ def admin_home():
      elif session['role']!='admin':
           return render_template('access_denied.html'), 403
 
-     return render_template('admin_home.html', username=session.get('username'))
+     return render_template('admin_home.html')
 
 
 @app.route('/helper/home')
@@ -66,7 +66,7 @@ def helper_home():
      elif session['role']!='helper':
           return render_template('access_denied.html'), 403
 
-     return render_template('helper_home.html', first_name=session['first_name'])
+     return render_template('helper_home.html')
 
 @app.route('/visitor/home')
 def visitor_home():
@@ -78,7 +78,7 @@ def visitor_home():
           return render_template('access_denied.html'), 403
      first_name = session['first_name']
 
-     return render_template('visitor_home.html', first_name=first_name)
+     return render_template('visitor_home.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
