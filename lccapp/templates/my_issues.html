@@ -6,30 +6,32 @@
 <section class="container pt-5">
     <!-- Page Header -->
     <div class="row justify-content-between align-items-center mb-2">
-        <div class="col-lg-9">
+        <div class="col-12 col-md-6 col-lg-7">
             <h2>My Issues</h2>
             <p class="lead text-muted fs-6">
                 Manage your own reported issues here effortlessly.
             </p>
         </div>
-        <div class="col-12 col-lg-2 text-lg-end">
+        <div class="col-12 col-md-4 col-lg-2 text-lg-end">
             <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#newIssueModal"><i class="bi bi-plus-square me-2"></i>New Issue</button>
         </div>
     </div>
 
     <!-- Issue List -->
+    {% if issues %}
     <div class="accordion" id="accordionExample">
         {% for issue in issues %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button text-start {% if not loop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="{% if loop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ loop.index }}">
                     <div class="d-flex flex-column">
+                        <!-- status badge -->
                         <span class="fw-bold">
                             <span class="badge text-bg-{{ issue.issue_status }} me-2">{{ issue.issue_status|capitalize }}</span>
                             {{ issue.summary }}
                         </span>
                         <div class="d-flex align-items-center mt-1">
-                            <span class="text-secondary">{{ issue.first_name }} | {{ issue.created_at.strftime('%d-%m-%Y') }}</span>
+                            <span class="text-secondary">{{ issue.first_name }} · {{ issue.created_at.strftime('%H:%M %d-%m-%Y') }}</span>
                         </div>
                     </div>
                 </button>
@@ -37,8 +39,9 @@
             <div id="collapse{{ loop.index }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <!-- Issue Status -->
+                    {% if session['role'] in ['helper', 'admin'] %}
                     <h6 class="mb-2"><strong>Issue Status</strong></h6>
-                    <form id="statusForm" action="{{ url_for('update_issue_status', issue_id=issue.issue_id) }}" method="POST" class="mb-2">
+                    <form id="statusForm-{{ issue.issue_id }}" action="{{ url_for('update_issue_status', issue_id=issue.issue_id) }}" method="POST" class="mb-2">
                         <input type="hidden" name="source_page" value="my_issues">
                         <div class="mb-3">
                             <div class="d-flex gap-3">
@@ -61,7 +64,8 @@
                             </div>
                         </div>
                     </form>
-                    <h6><strong>Comments</strong></h6>
+                    {% endif %}
+                    <h6><strong>Description</strong></h6>
                     <div class="mb-2">
                         {{ issue.description }}
                     </div>
@@ -82,6 +86,7 @@
                     {% endfor %}
                     <!-- Add Comment Form -->
                     <form action="{{ url_for('add_comment', issue_id=issue.issue_id) }}" method="POST">
+                        <input type="hidden" name="source_page" id="source_page" value="my_issues">
                         <textarea class="form-control mb-2" name="content" id="content" placeholder="Add a comment" rows="3" required></textarea>
                         <div class="text-end">
                             <button type="submit" class="btn btn-success">Comment</button>
@@ -92,6 +97,16 @@
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <!-- Empty page -->
+    <div class="text-center py-5">
+        <h3 class="text-muted">No Issues Found</h3>
+        <p class="text-muted">You haven't reported any issues yet. Click the New Issue button to create a new issue.</p>
+        <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newIssueModal">
+            <i class="bi bi-plus-square me-2"></i>New Issue
+        </button> -->
+    </div>
+    {% endif %}
 
     <!-- New Issue Modal -->
     <div class="modal fade" id="newIssueModal" tabindex="-1" aria-labelledby="newIssueModalLabel" aria-hidden="true">
@@ -113,7 +128,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </form>
@@ -123,6 +138,16 @@
 </section>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        const statusForms = document.querySelectorAll('form[id^="statusForm-"]');
+        statusForms.forEach(form => {
+            const radioButtons = form.querySelectorAll('input[name="issue_status"]');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    form.submit(); 
+            });
+        });
+    });
+
         const hash = window.location.hash;
         if (hash) {
             const button = document.querySelector(`[data-bs-target="${hash}"]`);

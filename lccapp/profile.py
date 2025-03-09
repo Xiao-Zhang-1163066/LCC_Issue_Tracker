@@ -2,9 +2,17 @@ from lccapp import app, db
 from flask import redirect, render_template, request, session, url_for, flash
 import os
 from werkzeug.utils import secure_filename 
+
+# Get the absolute path of the current file
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "static/uploads")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER  
+#  Set allowed pic extentions
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+
+def allowed_file(filename):
+    """Check if the uploaded file has an allowed extension"""
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -30,6 +38,7 @@ def profile():
                 WHERE user_id = %s;
             """, (username, email, first_name, last_name, location, user_id))
             db.get_db().commit()
+        flash('Save successfully', 'success')
         return redirect(url_for('profile'))  
     # Fetch user data
     with db.get_cursor() as cursor:
@@ -49,7 +58,7 @@ def upload_image():
         flash('No file selected.', 'warning')
         return redirect(url_for('profile'))
 
-    if file:
+    if file and allowed_file(file.filename):
         filename = f"user_{session['user_id']}.png"  # Rename file
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
@@ -67,6 +76,8 @@ def upload_image():
             db.get_db().commit()
 
         flash('Profile image updated successfully!', 'success')
+    else:
+        flash('Invalid file type. Only PNG, JPG, JPEG, and GIF are allowed.', 'danger')
 
     return redirect(url_for('profile'))
 
@@ -74,3 +85,5 @@ if __name__ == '__main__':
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
     app.run(debug=True)
+
+

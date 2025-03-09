@@ -6,12 +6,28 @@
 {% set active_page = 'home' %}
 
 {% block content %}
-<section class="container py-5 text-center">
-    <div class="row justify-content-center">
-        <div class="col-lg-7">
-            <h1>Helper Home Page</h1>
-            <p class="lead text-muted">This is the page an helper user sees when they first sign in. It should provide quick access to the information and features they're most likely to need when using the app.</p>
+<section class="container-fluid d-flex align-items-center justify-content-center min-vh-100 py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- text content -->
+            <div class="col-lg-6 order-lg-1 order-2 text-lg-start text-center">
+                <h1 class="display-4 fw-bold mb-4">Kia ora!👋</h1>
+                <p class="lead text-muted mb-4">
+                    Thank you for helping keep Lincoln Community Campground running smoothly. Please check for any reported issues and update their status as needed.
+                </p>
+                <a href="{{url_for('user_issues')}}" class="btn btn-success me-1">Manage User Issues</a>
+                <a href="{{url_for('my_issues')}}" class="btn btn-outline-success me-1">Check My Issues</a>
+                <div class="mt-5">
+                <p class="text-body-tertiary">Developed by Xiao Zhang, Student ID 1163066</p>
+                </div>
+            </div>
+
+            <!-- image -->
+            <div class="col-lg-6 order-lg-2 order-1 mb-lg-0 mb-4">
+                <img src="/static/home_pic.png" alt="Visitor Home Image" class="img-fluid">
+            </div>
         </div>
+        
     </div>
 </section>
 {% endblock %}

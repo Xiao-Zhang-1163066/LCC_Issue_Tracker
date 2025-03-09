@@ -41,7 +41,7 @@
                                 <img src="{{ issue.profile_image or '/static/avatar_default.png' }}" alt="{{ issue.first_name }}" width="20" height="20"
                                     class="rounded-circle border border-white me-2">
                                 <div>
-                                    <p class="text-secondary fs-6 my-0">{{ issue.first_name }}<i class="bi bi-clock ms-2 me-1"></i>{{ issue.created_at.strftime('%d-%m-%Y') }}</p>
+                                    <p class="text-secondary fs-6 my-0">{{ issue.first_name }}<i class="bi bi-clock ms-2 me-1"></i>{{ issue.created_at.strftime('%H:%M  %b %d') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                 {% for issue in resolved_issues %}
                 <div class="col-xl-3">
                     <a href="{{ url_for('issue_detail', issue_id=issue.issue_id) }}" class="text-decoration-none">
-                        <div class="card h-100 px-3 py-2 hover-shadow">
+                        <div class="card boarder-0  h-100 px-3 py-2 hover-shadow">
                             <span>
                                 <span class="badge text-bg-success d-inline-block mb-1">Resolved</span>
                                 <span class="fs-5 mb-1 d-block">{{ issue.summary }}</span>
@@ -66,7 +66,7 @@
                                 <img src="{{ issue.profile_image or '/static/avatar_default.png' }}" alt="{{ issue.first_name }}" width="20" height="20"
                                     class="rounded-circle border border-white me-2">
                                 <div>
-                                    <p class="text-secondary fs-6 my-0">{{ issue.first_name }} | {{ issue.created_at.strftime('%d-%m-%Y') }}</p>
+                                    <p class="text-secondary fs-6 my-0">{{ issue.first_name }} | {{ issue.created_at.strftime('%H:%M  %b %d') }}</p>
                                 </div>
                             </div>
                         </div>

@@ -24,7 +24,6 @@ db.init_db(app, connect.dbuser, connect.dbpass, connect.dbhost, connect.dbname)
 
 # Include all modules that define our Flask route-handling functions.
 from lccapp import user
-from lccapp import admin
 from lccapp import profile
 from lccapp import my_issues
 from lccapp import user_issues

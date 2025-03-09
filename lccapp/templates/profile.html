@@ -9,9 +9,28 @@
 
 <section class="container pt-5">
     <div class="row justify-content-center pt-5">
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="toast-container position-fixed top-0 end-0 mt-5 p-3">
+                    {% for category, message in messages %}
+                        <div class="toast align-items-center text-bg-{{ category }} border-0 show" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{ message }}
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         <div class="col-lg-6 text-center mb-3">
             <img id="profileImage" 
-                 src="{{ profile.profile_image if profile.profile_image else 'static/uploads/default.jpg' }}" 
+                 src="{{ profile.profile_image if profile.profile_image else url_for('static', filename='uploads/default.jpg') }}" 
                  alt="Profile Picture" class="rounded-circle img-fluid" 
                  style="width: 150px; height: 150px; object-fit: cover;">
     
@@ -23,40 +42,39 @@
         </div>
     </div>
 
+    <!-- Profile Form -->
     <form id="profileForm" method="POST" action="{{ url_for('profile') }}">
         <div class="row justify-content-center">
             <div class="col-lg-3 mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" value="{{ profile.username }}" disabled>
+                <input type="text" class="form-control" id="username" name="username" value="{{ profile.username }}" readonly>
             </div>
             <div class="col-lg-3 mb-3">
                 <label for="useremail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="useremail" name="email" value="{{ profile.email }}" disabled>
+                <input type="email" class="form-control" id="useremail" name="email" value="{{ profile.email }}" required>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-3 mb-3">
                 <label for="first_name" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ profile.first_name }}" disabled>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ profile.first_name }}" required>
             </div>
             <div class="col-lg-3 mb-3">
                 <label for="last_name" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ profile.last_name }}" disabled>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ profile.last_name }}" required>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-6 mb-3">
                 <label for="location" class="form-label">Location</label>
-                <input type="text" class="form-control" id="location" name="location" value="{{ profile.location }}" disabled>
+                <input type="text" class="form-control" id="location" name="location" value="{{ profile.location }}" required>
             </div>
         </div>
 
         <!-- Buttons -->
         <div class="my-3 row justify-content-center">
-            <div class="col-lg-4 text-center">
-                <button type="button" class="btn btn-success col-12" id="editBtn">Edit</button>
-                <button type="submit" class="btn btn-success col-5 me-2 d-none" id="saveBtn">Save</button>
-                <button type="button" class="btn btn-outline-success col-5 d-none" id="cancelBtn">Cancel</button>
+            <div class="col-lg-6 text-center">
+                <button type="submit" class="btn btn-success col-12 me-2" id="saveBtn">Save</button>
             </div>
         </div>
     </form>
@@ -64,39 +82,31 @@
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Auto-display the save button and the cancel button
-    const editBtn = document.getElementById("editBtn");
-    const saveBtn = document.getElementById("saveBtn");
-    const cancelBtn = document.getElementById("cancelBtn");
-    const inputs = document.querySelectorAll("#profileForm input");
+    document.addEventListener("DOMContentLoaded", function() {
 
-    editBtn.addEventListener("click", function() {
-        inputs.forEach(input => input.removeAttribute("disabled"));
-        editBtn.classList.add("d-none");
-        saveBtn.classList.remove("d-none");
-        cancelBtn.classList.remove("d-none");
+    
+        /* ----- Profile Image Upload Preview ----- */
+        const changeImageBtn = document.getElementById("changeImageBtn");
+        const uploadImageBtn = document.getElementById("uploadImageBtn");
+        const profileImageInput = document.getElementById("profileImageInput");
+        const profileImage = document.getElementById("profileImage");
+    
+        changeImageBtn.addEventListener("click", function() {
+            profileImageInput.click();
+        });
+    
+        profileImageInput.addEventListener("change", function(event) {
+            const file = event.target.files[0];
+    
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profileImage.src = e.target.result; // Preview new image
+                };
+                reader.readAsDataURL(file);
+                uploadImageBtn.classList.remove("d-none");
+            }
+        });
     });
-
-    cancelBtn.addEventListener("click", function() {
-        inputs.forEach(input => input.setAttribute("disabled", "true"));
-        editBtn.classList.remove("d-none");
-        saveBtn.classList.add("d-none");
-        cancelBtn.classList.add("d-none");
-    });
-
-    // Image upload
-    const changeImageBtn = document.getElementById("changeImageBtn");
-    const uploadImageBtn = document.getElementById("uploadImageBtn");
-    const profileImageInput = document.getElementById("profileImageInput");
-
-    changeImageBtn.addEventListener("click", function() {
-        profileImageInput.click();
-    });
-
-    profileImageInput.addEventListener("change", function() {
-        uploadImageBtn.classList.remove("d-none");
-    });
-});
 </script>
 {% endblock %}

@@ -15,21 +15,6 @@
                 {{user.username}} 
             </div> 
         </div>
-
-        <!-- flash message -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6 alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-        {% endwith %}
-
         <!-- profile form -->
         <form id="profileForm" method="POST" action="{{ url_for('user_profile', user_id=user.user_id) }}">
             <div class="row justify-content-center">

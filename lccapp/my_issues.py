@@ -50,15 +50,31 @@ def add_issue():
 @app.route('/add_comment/<int:issue_id>', methods=['POST'])
 def add_comment(issue_id):
     user_id = session['user_id']
+    role = session['role']
     content = request.form['content']
+    source_page = request.form.get('source_page', 'issue_detail')
     with db.get_cursor() as cursor:
         cursor.execute("""
             insert into comments (issue_id, user_id, content)
             values (%s, %s, %s)
             ;""", (issue_id, user_id, content))
         db.get_db().commit()
+    
+    # If the user is a Helper or Admin, update the issue status to "open"
+    if role in ['helper', 'admin']:
+        with db.get_cursor() as cursor:
+            cursor.execute("""
+                UPDATE issues
+                SET issue_status = 'open'
+                WHERE issue_id = %s AND issue_status IN ('new', 'stalled', 'resolved');
+            """, (issue_id,))
+            db.get_db().commit()
+
     flash('You commented successfully!', 'success')
     
-    return redirect(url_for('my_issues'))  
+    if source_page == "my_issues":
+        return redirect(url_for('my_issues'))
+
+    return redirect(url_for('issue_detail', issue_id=issue_id))
 
 

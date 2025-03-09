@@ -23,7 +23,7 @@ def user_issues():
             SELECT i.issue_id, i.summary, i.description, i.created_at, i.issue_status, u.user_id, u.first_name, u.last_name, u.profile_image
             FROM issues i
             JOIN users u ON i.user_id = u.user_id
-            WHERE i.issue_status IN ('new', 'open', 'stalled')
+            WHERE i.issue_status = 'resolved'
             ;""")
         resolved_issues = cursor.fetchall()
     # Fetch resolved issues (status: resolved)
@@ -64,18 +64,17 @@ def update_issue_status(issue_id):
     """change issue status"""
     new_status = request.form.get('issue_status')  
     source_page = request.form.get('source_page', 'my_issues')
+    # update issue status
     with db.get_cursor() as cursor:
-        # update issue status
             cursor.execute("""
                 UPDATE issues
                 SET issue_status = %s
                 WHERE issue_id = %s
                 ;""", (new_status, issue_id,))
             db.get_db().commit()
+    flash('Issue status updated successfully!', 'success')
     if source_page == "my_issues":
         return redirect(url_for('my_issues'))
-    elif source_page == "issue_detail":
-        return redirect(url_for('issue_detail', issue_id=issue_id))
-    else:
-        return redirect(url_for('my_issues'))
+    return redirect(url_for('issue_detail', issue_id=issue_id))
+ 
 

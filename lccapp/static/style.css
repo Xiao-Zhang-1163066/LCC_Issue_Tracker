@@ -1,54 +1,53 @@
-:root {
-    --bs-primary: #198754 !important; 
-  }
-  
-
+/* navbar logo width */
 .navbar-brand {
-    width: 250px !important; /* 强制设置侧边栏宽度 */
+    width: 250px !important; 
 }
+/* sidebar width and color */
 .offcanvas {
-    width: 250px !important; /* 强制设置侧边栏宽度 */
-    background-color: #ffffff; /* 浅色背景 */
+    width: 250px !important; 
+    background-color: #ffffff; 
 }
-/* 主要内容区域 */
+/* content area on the right of sidebar */
 .main-content {
-    margin-left: 0; /* 默认没有侧边栏偏移 */
-    transition: margin-left 0.3s; /* 平滑过渡 */
+    margin-left: 0; 
+    transition: margin-left 0.3s; 
 }
 
-
+/* sidebar link color */
 .nav-pills .nav-link.active {
-    background-color: #19875441 !important; /* 你想要的颜色 */
-    color: 198754 !important; /* 文字颜色 */
-    border-radius: 5px; /* 圆角（可选） */
+    background-color: #19875441 !important; 
+    color: 198754 !important; 
+    border-radius: 5px; 
 }
 
+/* sidebar link hover color */
 .nav-pills .nav-link:hover {
-    background-color: #19875412 !important; /* 你想要的颜色 */
-    color: 198754 !important; /* 文字颜色 */
-    border-radius: 5px; /* 圆角（可选） */
+    background-color: #19875412 !important; 
+    color: 198754 !important; 
+    border-radius: 5px; 
 }
 
-/* PC 端侧边栏常驻 */
+/* always show side bar on larg screen */
 @media (min-width: 992px) {
     .offcanvas {
         position: fixed;
-        top: -8px !important; /* 顶部导航栏的高度 */
+        top: -8px !important; 
         bottom: 0;
         left: 0;
         z-index: 1000;
-        transform: none !important; /* 强制显示 */
+        transform: none !important; /* no collapse */
         visibility: visible !important;
     }
     .main-content {
-        margin-left: 250px; /* 侧边栏宽度 */
+        margin-left: 250px; 
     }
-    /* 隐藏 Offcanvas 的关闭按钮 */
+    /* hide close button */
     .offcanvas .btn-close {
         display: none;
     }
     }
 
+/* shadow style for the issue cards in User Issues page */
 .hover-shadow {
     box-shadow: 0 0rem 1rem rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
@@ -57,7 +56,7 @@
     box-shadow: 0 0.5rem 1.2rem rgba(0, 0, 0, 0.15);
     transition: box-shadow 0.3s ease;
 }
-    
+
 
 .accordion-active-bg {
     background-color: #19875412 !important; 
@@ -83,3 +82,23 @@
 .text-bg-resolved {
     background-color: #198754;
 }
+
+/* login & sign up page style */
+/* fullscreen background image  */
+html, body {
+    overflow: hidden;
+    margin: 0; 
+    padding: 0;
+    width: 100%; 
+    height: 100%; 
+  }
+
+  .full-screen {
+    width: 100vw; 
+    height: 100vh;
+  }
+
+  /* Logo & title */
+  .logo-container {
+    position: absolute;
+  }

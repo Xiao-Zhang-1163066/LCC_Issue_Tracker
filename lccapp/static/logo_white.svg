@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240px" height="240px" viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>logo</title>
+    <defs>
+        <polygon id="path-1" points="0 240 240 240 240 0 0 0"></polygon>
+    </defs>
+    <g id="logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="camping_5074295" transform="translate(-0, -0)">
+            <g id="g313-Clipped" transform="translate(120, 120) scale(-1, 1) rotate(-180) translate(-120, -120)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="path315"></g>
+                <g id="g313" mask="url(#mask-2)">
+                    <g transform="translate(-0.0228, -0.005)" id="g319">
+                        <g transform="translate(-0, 0)">
+                            <path d="M235.940793,43.96 L120.020793,240.13 L4.10079299,43.96 C-1.28920701,34.84 -1.36920701,23.9 3.88079299,14.7 C9.13079299,5.49 18.590793,0 29.190793,0 L54.950793,0 L120.020793,110.13 L185.100793,0 L210.860793,0 C221.450793,0 230.920793,5.49 236.160793,14.7 C241.410793,23.9 241.330793,34.84 235.940793,43.96 M120.020793,70.82 L161.870793,0 L78.180793,0 L120.020793,70.82 Z" id="path321" fill="#FFFFFF" fill-rule="nonzero"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

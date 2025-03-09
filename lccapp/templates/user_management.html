@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}My Issues{% endblock %}
+{% block title %}User Management{% endblock %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
         <div class="col-lg-9">
             <h2>User Management</h2>
             <p class="lead text-muted fs-6">
-                This is the page an admin user sees when they first sign in. It should provide quick access to the information and features they're most likely to need when using the app.
+                You can view all user profiles, change roles, and update user statuses here.
             </p>
         </div>
     </div>
@@ -23,7 +23,7 @@
         </div>
         {% if search_query %}
             <div class="col-md-3 col-lg-2">
-                <button type="button" id="resetButton" class="btn btn-secondary w-100">Reset</button>
+                <a href="{{url_for('user_management')}}" class="btn btn-outline-success w-100">Reset</a>
             </div>
         {% endif %}
     </form>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>{% block title %}{% endblock %}</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -57,8 +57,8 @@
                         Profile
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="{{ url_for('profile') }}">Edit</a></li>
-                      <li><a class="dropdown-item" href="#">Change Password</a></li>
+                      <li><a class="dropdown-item" href="{{ url_for('profile') }}">Edit Profile</a></li>
+                      <li><a class="dropdown-item" href="{{ url_for('reset_password') }}">Reset Password</a></li>
                     </ul>
                 </li>
                 <!-- <li class="nav-item mb-3">
@@ -70,8 +70,6 @@
                     <a class="nav-link link-success" href="{{ url_for('logout') }}">Log Out</a>
                 </li>
             </ul>
-            <p class="text-secondary">Student Name: Xiao Zhang</p> 
-            <p class="text-secondary">Student ID:   1163066</p>
         </div>
     </div>
 
@@ -83,9 +81,36 @@
         {% for message in get_flashed_messages() %}
         <div class="flash">{{ message }}</div>
         {% endfor %}
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="toast-container position-fixed top-0 end-0 mt-5 p-3">
+                    {% for category, message in messages %}
+                        <div class="toast align-items-center text-bg-{{ category }} border-0 show" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{ message }}
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize all toasts with Bootstrap's JavaScript
+            var toasts = document.querySelectorAll('.toast');
+            toasts.forEach(function(toast) {
+                var bsToast = new bootstrap.Toast(toast);
+                bsToast.show(); // Show the toast with auto-hide enabled
+            });
+        });
+    </script>
 </body>
 </html>

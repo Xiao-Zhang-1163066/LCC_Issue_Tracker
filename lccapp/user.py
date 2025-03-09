@@ -39,8 +39,8 @@ def root():
     return redirect(user_home_url())
 
 
-@app.route('/helper/home')
-def helper_home():
+@app.route('/admin/home')
+def admin_home():
      """Admin Homepage endpoint.
 
      Methods:
@@ -51,10 +51,34 @@ def helper_home():
      """
      if 'loggedin' not in session:
           return redirect(url_for('login'))
+     elif session['role']!='admin':
+          return render_template('access_denied.html'), 403
+
+     return render_template('admin_home.html', username=session.get('username'))
+
+
+@app.route('/helper/home')
+def helper_home():
+     """Helper Homepage endpoint.
+     """
+     if 'loggedin' not in session:
+          return redirect(url_for('login'))
      elif session['role']!='helper':
           return render_template('access_denied.html'), 403
 
-     return render_template('helper_home.html', username=session.get('username'))
+     return render_template('helper_home.html', first_name=session['first_name'])
+
+@app.route('/visitor/home')
+def visitor_home():
+     """Visitor Homepage endpoint.
+     """
+     if 'loggedin' not in session:
+          return redirect(url_for('login'))
+     elif session['role']!='visitor':
+          return render_template('access_denied.html'), 403
+     first_name = session['first_name']
+
+     return render_template('visitor_home.html', first_name=session['first_name'])
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -82,7 +106,7 @@ def login():
         # Attempt to validate the login details against the database.
         with db.get_cursor() as cursor:
             cursor.execute('''
-                           SELECT user_id, username, password_hash, role, status
+                           SELECT user_id, username, password_hash, role, status, first_name
                            FROM users
                            WHERE username = %s;
                            ''', (username,))
@@ -111,6 +135,7 @@ def login():
                         session['user_id'] = account['user_id']
                         session['username'] = account['username']
                         session['role'] = account['role']
+                        session['first_name'] = account['first_name']
                         session['status'] = account['status']
                         return redirect(user_home_url())
                 else:
@@ -165,7 +190,10 @@ def signup():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-
+        confirm_password = request.form['confirm_password']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        location = request.form['location']
         # We start by assuming that everything is okay. If we encounter any
         # errors during validation, we'll store an error message in one or more
         # of these variables so we can pass them through to the template.
@@ -213,8 +241,11 @@ def signup():
         # password in our database, and not the password itself, it doesn't
         # matter how long a password the user chooses. Whether it's 8 or 800
         # characters, the hash will always be the same length.
-        if len(password) < 8:
-            password_error = 'Please choose a longer password!'
+        # Validate the password
+        if password != confirm_password:
+            password_error = 'Passwords do not match.'
+        elif not is_password_valid(password):
+            password_error = 'Password must be at least 8 characters long and include a mix of letters and numbers.'
                 
         if (username_error or email_error or password_error):
             # One or more errors were encountered, so send the user back to the
@@ -223,9 +254,12 @@ def signup():
             return render_template('signup.html',
                                    username=username,
                                    email=email,
-                                   username_error=username_error,
-                                   email_error=email_error,
-                                   password_error=password_error)
+                                   first_name = first_name,
+                                   last_name = last_name,
+                                   location = location,
+                                   username_error = username_error,
+                                   email_error = email_error,
+                                   password_error = password_error)
         else:
             # The new account details are valid. Hash the user's new password
             # and create their account in the database.
@@ -240,15 +274,16 @@ def signup():
             # possibility, and display a more useful message to the user.
             with db.get_cursor() as cursor:
                 cursor.execute('''
-                               INSERT INTO users (username, password_hash, email, role)
-                               VALUES (%s, %s, %s, %s);
+                               INSERT INTO users (username, password_hash, email, first_name, last_name, location, role)
+                               VALUES (%s, %s, %s, %s, %s, %s, %s);
                                ''',
-                               (username, password_hash, email, DEFAULT_USER_ROLE,))
+                               (username, password_hash, email, first_name, last_name, location, DEFAULT_USER_ROLE,))
+            flash('You have signed up successfully!', 'success')
             
             # Now that registration is complete, send the user back to the
             # signup page. We set the `signup_successful` flag to display a
             # post-signup message.
-            return render_template('signup.html', signup_successful=True)            
+            return render_template('login.html')            
 
     # This was a GET request, or an invalid POST (no username, email, and/or
     # password). Render the signup page with no pre-populated form fields or
@@ -276,3 +311,63 @@ def logout():
     session.pop('role', None)
     
     return redirect(url_for('login'))
+
+def is_password_valid(password):
+    """
+    Check if the password meets complexity requirements.
+    """
+    if len(password) < 8:
+        return False
+    if not re.search(r"[a-zA-Z]", password):  # At least one letter 
+        return False
+    if not re.search(r"[0-9]", password):  # At least one digit
+        return False
+    return True
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    """Reset password endpoint."""
+    if 'loggedin' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+
+    if request.method == 'POST':
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        # Fetch the user's current password hash from the database
+        with db.get_cursor() as cursor:
+            cursor.execute("SELECT password_hash FROM users WHERE user_id = %s;", (user_id,))
+            user = cursor.fetchone()
+
+        if not user:
+            flash('User not found.', 'danger')
+            return redirect(url_for('reset_password'))
+
+        # Verify the current password
+        if not flask_bcrypt.check_password_hash(user['password_hash'], current_password):
+            flash('Current password is incorrect.', 'danger')
+            return redirect(url_for('reset_password'))
+
+        # Check if the new password matches the confirm password
+        if new_password != confirm_password:
+            flash('New password and confirm password do not match.', 'danger')
+            return redirect(url_for('reset_password'))
+
+        # Check password complexity
+        if not is_password_valid(new_password):
+            flash('Password must be at least 8 characters long and include a mix of uppercase, lowercase, numbers, and special characters.', 'danger')
+            return redirect(url_for('reset_password'))
+
+        # Hash the new password and update the database
+        hashed_password = flask_bcrypt.generate_password_hash(new_password)
+        with db.get_cursor() as cursor:
+            cursor.execute("UPDATE users SET password_hash = %s WHERE user_id = %s;", (hashed_password, user_id))
+            db.get_db().commit()
+
+        flash('Password updated successfully!', 'success')
+        return redirect(user_home_url())
+
+    return render_template('reset_password.html')

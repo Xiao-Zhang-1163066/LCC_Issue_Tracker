@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Admin Home{% endblock %}
+{% block title %}Visitor Home{% endblock %}
 
 {# Set the active page to be highlighted in the navigation bar. #}
 {% set active_page = 'home' %}
@@ -13,13 +13,11 @@
             <div class="col-lg-6 order-lg-1 order-2 text-lg-start text-center">
                 <h1 class="display-4 fw-bold mb-4">Kia ora!👋</h1>
                 <p class="lead text-muted mb-4">
-                    As a admin, you can manage oversee reported issues and manage all the users' profiles. Thanks for keeping Lincoln Community Campground a great place for everyone!
+                    Welcome to Lincoln Community Campground! If you encounter any issues during your visit, please report them on the ‘My Issues’ page. Our volunteers will address them as soon as possible. We hope you have a great experience!
                 </p>
-                <a href="{{url_for('user_issues')}}" class="btn btn-success me-2 my-2">Manage User Issues</a>
-                <a href="{{url_for('user_management')}}" class="btn btn-outline-success me-2 my-2">User Management</a>
-                <a href="{{url_for('my_issues')}}" class="btn btn-outline-success me-2 my-2">Check My Issues</a>
+                <a href="{{url_for('my_issues')}}" class="btn btn-success">Get Started</a>
                 <div class="mt-5">
-                <p class="text-body-tertiary">Developed by Xiao Zhang, Student ID 1163066</p>
+                    <p class="text-body-tertiary">Developed by Xiao Zhang, Student ID 1163066</p>
                 </div>
             </div>
 

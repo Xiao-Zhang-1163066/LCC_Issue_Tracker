@@ -6,19 +6,22 @@
 <section class="container pt-5">
     <div class="row justify-content-center"></div>
         <div class="col-lg-8 mx-lg-auto">
-            <!-- Page Header -->
-            <h3 class=""> 
-                {{ issue.summary }}
-            </h3>
+                <!-- Page header -->
+            <div class="d-flex align-items-center">
+                <!-- Status badge -->
+                <span class="fw-bold">
+                    <span class="badge text-bg-{{ issue.issue_status }} me-2">{{ issue.issue_status|capitalize }}</span>
+                </span>
+                <div class="fs-3 fw-semibold">{{ issue.summary }}</div>
+            </div>  
+            <span class="text-secondary">Created by {{ issue.first_name }} at {{ issue.created_at.strftime('%H:%M %d-%m-%Y') }}</span>
 
-            <div class="d-flex align-items-center mt-1 ">
-                <span class="text-secondary">Created by {{ issue.first_name }} at {{ issue.created_at.strftime('%H:%M %d-%m-%Y') }}</span>
-            </div>
-            <div class="card p-3 mt-3 mb-5">
-                <!-- choose status -->
+            <!-- Information card -->
+            <div class="card border-0 shadow-sm p-3 mt-3 mb-5">
+                <!-- Choose status -->
                 <h6 class="mb-2"><strong>Issue Status</strong></h6>
                 <form id="statusForm" action="{{ url_for('update_issue_status', issue_id=issue.issue_id) }}" method="POST" class="mb-2">
-                    <input type="hidden" name="source_page" value="issue_detail">
+                    <input type="hidden" name="source_page" id="source_page" value="issue_detail">
                     <div class="mb-3">
                         <div class="d-flex gap-3">
                             <div class="form-check">
@@ -40,7 +43,7 @@
                         </div>
                     </div>
                 </form>
-                <!-- description -->
+                <!-- Description -->
                 <h6 class="mb-2"><strong>Description</strong></h6>
                 <div class="mb-2">
                     {{ issue.description }}
@@ -61,8 +64,9 @@
                 </div>
                 {% endfor %}
 
-                <!-- Add Comment Form -->
+                <!-- Add comment form -->
                 <form action="{{ url_for('add_comment', issue_id=issue.issue_id) }}" method="POST">
+                    <input type="hidden" name="source_page" id="source_page" value="issue_detail">
                     <textarea class="form-control mb-2" name="content" id="content" placeholder="Add a comment" rows="3" required></textarea>
                     <div class="text-end">
                         <button type="submit" class="btn btn-success">Comment</button>
