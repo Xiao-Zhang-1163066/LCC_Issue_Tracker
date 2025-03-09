@@ -78,7 +78,7 @@ def visitor_home():
           return render_template('access_denied.html'), 403
      first_name = session['first_name']
 
-     return render_template('visitor_home.html', first_name=session['first_name'])
+     return render_template('visitor_home.html', first_name=first_name)
 
 
 @app.route('/login', methods=['GET', 'POST'])
