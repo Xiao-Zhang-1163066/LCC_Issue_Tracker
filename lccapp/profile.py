@@ -2,6 +2,7 @@ from lccapp import app, db
 from flask import redirect, render_template, request, session, url_for, flash
 import os
 from werkzeug.utils import secure_filename 
+from .user import role_required
 
 # Get the absolute path of the current file
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -15,10 +16,9 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/profile', methods=['GET', 'POST'])
+@role_required()
 def profile():
     """User Profile page endpoint."""
-    if 'loggedin' not in session:
-        return redirect(url_for('login'))
 
     user_id = session['user_id']
 
@@ -47,7 +47,9 @@ def profile():
 
     return render_template('profile.html', profile=profile, username=session.get('username'))
 
+
 @app.route('/upload_image', methods=['POST'])
+@role_required()
 def upload_image():
     if 'profile_image' not in request.files:
         flash('No file uploaded.', 'danger')

@@ -1,13 +1,11 @@
 from lccapp import app, db
 from flask import redirect, render_template, request, session, url_for, flash
-
-
+from .user import role_required
 
 @app.route('/user_management')
+@role_required(['admin'])
 def user_management():
     """ display the list of all the users """
-    if 'loggedin' not in session:
-        return redirect(url_for('login'))   
     search_query = request.args.get('search', '').strip()
     with db.get_cursor() as cursor:
         if search_query:
@@ -38,8 +36,10 @@ def user_management():
 
 
 @app.route('/user_profile/<int:user_id>', methods=['GET', 'POST'])
+@role_required(['admin'])
 def user_profile(user_id):
     """display the chosen user's information and allow admin to edit role and user st"""
+    
     if request.method == 'POST':
         role = request.form.get('role')
         status = request.form.get('status')

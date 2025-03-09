@@ -3,6 +3,7 @@ from lccapp import db
 from flask import redirect, render_template, request, session, url_for, flash
 from flask_bcrypt import Bcrypt
 import re
+from functools import wraps
 
 # Create an instance of the Bcrypt class, which we'll be using to hash user
 # passwords during login and registration.
@@ -10,6 +11,24 @@ flask_bcrypt = Bcrypt(app)
 
 # Default role assigned to new users upon registration.
 DEFAULT_USER_ROLE = 'visitor'
+
+
+def role_required(allowed_roles=['admin', 'helper', 'visitor']):
+    """
+    Custom decorator to restrict access based on user roles.
+     allowed_roles: List of roles allowed to access the function. Defaults to ['admin', 'helper', 'visitor'].
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if 'loggedin' not in session:
+                return redirect(url_for('login'))
+            if session.get('role') not in allowed_roles:
+                return render_template('access_denied.html'), 403
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
 
 def user_home_url():
     """Generates a URL to the homepage for the currently logged-in user.
@@ -28,6 +47,7 @@ def user_home_url():
     
     return url_for(home_endpoint)
 
+
 @app.route('/')
 def root():
     """Root endpoint (/)
@@ -40,44 +60,26 @@ def root():
 
 
 @app.route('/admin/home')
+@role_required(['admin'])
 def admin_home():
      """Admin Homepage endpoint.
-
-     Methods:
-     - get: Renders the homepage for the current admin user, or an "Access
-          Denied" 403: Forbidden page if the current user has a different role.
-
-     If the user is not logged in, requests will redirect to the login page.
      """
-     if 'loggedin' not in session:
-          return redirect(url_for('login'))
-     elif session['role']!='admin':
-          return render_template('access_denied.html'), 403
-
      return render_template('admin_home.html')
 
 
 @app.route('/helper/home')
+@role_required(['helper'])
 def helper_home():
      """Helper Homepage endpoint.
      """
-     if 'loggedin' not in session:
-          return redirect(url_for('login'))
-     elif session['role']!='helper':
-          return render_template('access_denied.html'), 403
-
      return render_template('helper_home.html')
 
+
 @app.route('/visitor/home')
+@role_required(['visitor'])
 def visitor_home():
      """Visitor Homepage endpoint.
      """
-     if 'loggedin' not in session:
-          return redirect(url_for('login'))
-     elif session['role']!='visitor':
-          return render_template('access_denied.html'), 403
-     first_name = session['first_name']
-
      return render_template('visitor_home.html')
 
 
@@ -166,6 +168,7 @@ def login():
     # This was a GET request, or an invalid POST (no username and/or password),
     # so we just render the login form with no pre-populated details or flags.
     return render_template('login.html')
+
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
@@ -291,7 +294,6 @@ def signup():
     return render_template('signup.html')
 
 
-
 @app.route('/logout')
 def logout():
     """Logout endpoint.
@@ -312,6 +314,7 @@ def logout():
     
     return redirect(url_for('login'))
 
+
 def is_password_valid(password):
     """
     Check if the password meets complexity requirements.
@@ -324,11 +327,11 @@ def is_password_valid(password):
         return False
     return True
 
+
 @app.route('/reset_password', methods=['GET', 'POST'])
+@role_required()
 def reset_password():
     """Reset password endpoint."""
-    if 'loggedin' not in session:
-        return redirect(url_for('login'))
 
     user_id = session['user_id']
 

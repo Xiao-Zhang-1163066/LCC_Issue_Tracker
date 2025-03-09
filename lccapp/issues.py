@@ -1,11 +1,11 @@
 from lccapp import app, db
 from flask import redirect, render_template, request, session, url_for, flash
+from .user import role_required
 
 @app.route('/my_issues')
+@role_required()
 def my_issues():
     """My Issues page endpoint."""
-    if 'loggedin' not in session:
-        return redirect(url_for('login'))
 
     user_id = session['user_id']
 
@@ -33,6 +33,7 @@ def my_issues():
     return render_template('my_issues.html', issues=issues, username=session.get('username'))
 
 @app.route('/add_issue', methods=['POST'])
+@role_required()
 def add_issue():
     user_id = session['user_id']
     formvals = request.form 
@@ -48,6 +49,7 @@ def add_issue():
     return redirect(url_for('my_issues'))  
 
 @app.route('/add_comment/<int:issue_id>', methods=['POST'])
+@role_required()
 def add_comment(issue_id):
     user_id = session['user_id']
     role = session['role']
@@ -78,13 +80,9 @@ def add_comment(issue_id):
     return redirect(url_for('issue_detail', issue_id=issue_id))
 
 @app.route('/user_issues')
+@role_required(['admin', 'helper'])
 def user_issues():
     """display the issues reported by all the users"""
-    if 'loggedin' not in session:
-        return redirect(url_for('login'))   
-
-    user_id = session['user_id']
-
     with db.get_cursor() as cursor:
         # Fetch ongoing issues (status: new, open, stalled)
         cursor.execute("""
@@ -107,6 +105,7 @@ def user_issues():
     return render_template('user_issues.html', ongoing_issues=ongoing_issues, resolved_issues=resolved_issues)
 
 @app.route('/issue_detail/<int:issue_id>')
+@role_required(['admin', 'helper'])
 def issue_detail(issue_id):
     """display details of the chosen issue"""
     if 'loggedin' not in session:
@@ -136,6 +135,7 @@ def issue_detail(issue_id):
 
 
 @app.route('/update_issue_status/<int:issue_id>', methods=['POST'])
+@role_required(['admin', 'helper'])
 def update_issue_status(issue_id):
     """change issue status"""
     new_status = request.form.get('issue_status')  
