@@ -32,6 +32,7 @@ def my_issues():
 
     return render_template('my_issues.html', issues=issues, username=session.get('username'))
 
+
 @app.route('/add_issue', methods=['POST'])
 @role_required()
 def add_issue():
@@ -47,6 +48,7 @@ def add_issue():
         db.get_db().commit()
     flash('A issue added successfully!', 'success')
     return redirect(url_for('my_issues'))  
+
 
 @app.route('/add_comment/<int:issue_id>', methods=['POST'])
 @role_required()
@@ -79,6 +81,7 @@ def add_comment(issue_id):
 
     return redirect(url_for('issue_detail', issue_id=issue_id))
 
+
 @app.route('/user_issues')
 @role_required(['admin', 'helper'])
 def user_issues():
@@ -103,6 +106,7 @@ def user_issues():
     # Fetch resolved issues (status: resolved)
 
     return render_template('user_issues.html', ongoing_issues=ongoing_issues, resolved_issues=resolved_issues)
+
 
 @app.route('/issue_detail/<int:issue_id>')
 @role_required(['admin', 'helper'])
